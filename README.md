@@ -4,3 +4,4 @@
 ## Day 1
 Pairing - Angela and Evie
 Covered stages 1-5 (setting up rspec)
+Progressed to stage 10 (setting up Bike class)
