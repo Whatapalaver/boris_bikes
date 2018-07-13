@@ -5,44 +5,47 @@ describe DockingStation do
 	# method tests
 	it { is_expected.to respond_to :release_bike }
 	it { is_expected.to respond_to(:dock).with(1).argument }
-  it { is_expected.to respond_to :bike }
-  
-  it 'releases working bikes' do
-    subject.dock(Bike.new)
-    bike = subject.release_bike
-    expect(bike).to be_working
-  end 
+  it { is_expected.to respond_to :bikes }
 
-  # docking tests
+  describe "#release_bike" do
+    it 'should raise an error if no bikes available' do
+      expect {subject.release_bike}.to raise_error("There are no bikes available here")
+    end
 
-  it 'docks something' do
-    bike = Bike.new
-    expect(subject.dock(bike)).to eq bike
+    it 'should release a bike if one is available' do
+      bike = Bike.new
+      subject.dock(bike)
+      expect(subject.release_bike).to eq bike
+    end
   end
 
-  it 'returns docked bikes' do
-    bike = Bike.new
-    subject.dock(bike)
-    expect(subject.bike).to eq bike
+  describe "#dock" do
+    it 'docks something' do
+      bike = Bike.new
+      expect(subject.dock(bike)).to eq bike
+    end
+
+    it 'will allow 20 bikes to be docked' do
+      20.times {subject.dock(Bike.new)}
+      expect(subject.bikes.length).to eq 20
+    end
+
+    it 'raises error if capacity exceeds 20' do
+      20.times {subject.dock(Bike.new)}
+      expect {subject.dock(Bike.new).to raise_error("The dock is full")}
+    end
+
+
   end
 
-  # Error raising
+  describe "#working?" do
 
-  it 'should raise an error if no bikes available' do
-    expect {subject.release_bike}.to raise_error("There are no bikes available here")
-  end
+    it 'releases working bikes' do
+      subject.dock(Bike.new)
+      bike = subject.release_bike
+      expect(bike).to be_working
+    end 
 
-  it 'should release a bike if one is available' do
-    bike = Bike.new
-    subject.dock(bike)
-    expect(subject.release_bike).to eq bike
-  end
-
-  it 'raises error if attempt to dock a bike when station already contains bike' do
-    bike1 = Bike.new
-    bike2 = Bike.new
-    subject.dock(bike1)
-    expect {subject.dock(bike2)}.to raise_error("The dock is full")
   end
 end
 
