@@ -7,6 +7,14 @@ describe DockingStation do
 	it { is_expected.to respond_to(:dock).with(1).argument }
   it { is_expected.to respond_to :bikes }
 
+  it 'shows default capacity if no argument given' do
+    expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
+  end
+
+  it 'shows updated capacity if argument given' do
+    expect(DockingStation.new(30).capacity).to eq 30
+  end
+
   describe "#release_bike" do
     it 'should raise an error if no bikes available' do
       expect {subject.release_bike}.to raise_error("There are no bikes available here")
