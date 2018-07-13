@@ -21,13 +21,13 @@ describe DockingStation do
 
   describe "#dock" do
 
-    it 'will allow 20 bikes to be docked' do
-      20.times {subject.dock(Bike.new)}
-      expect(subject.bikes.length).to eq 20
+    it 'will allow bikes to be docked upto Default Capacity' do
+      DockingStation::DEFAULT_CAPACITY.times {subject.dock(Bike.new)}
+      expect(subject.bikes.length).to eq DockingStation::DEFAULT_CAPACITY
     end
 
-    it 'raises error if capacity exceeds 20' do
-      20.times {subject.dock(Bike.new)}
+    it 'raises error if capacity exceeds Default Capacity' do
+      DockingStation::DEFAULT_CAPACITY.times {subject.dock(Bike.new)}
       expect {subject.dock(Bike.new).to raise_error("The dock is full")}
     end
 
