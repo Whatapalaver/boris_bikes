@@ -8,14 +8,25 @@ class DockingStation
 	def initialize
 		@bikes = []
 	end
+
 	def dock(bike)
-		fail "The dock is full" unless @bikes.length < 20 
+		fail "The dock is full" if full? 
 		@bikes << bike
-		@bikes[@bikes.length - 1]
 	end
 
 	def release_bike
-		fail "There are no bikes available here" unless !@bikes.empty?		
+		fail "There are no bikes available here" if empty?		
 		 @bikes.pop
 	end
+
+	private
+	def full?
+		@bikes.length >= 20
+	end
+	
+	def empty?
+		@bikes.empty?
+	end
+
+	
 end

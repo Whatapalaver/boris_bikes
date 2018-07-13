@@ -20,10 +20,6 @@ describe DockingStation do
   end
 
   describe "#dock" do
-    it 'docks something' do
-      bike = Bike.new
-      expect(subject.dock(bike)).to eq bike
-    end
 
     it 'will allow 20 bikes to be docked' do
       20.times {subject.dock(Bike.new)}
@@ -34,7 +30,6 @@ describe DockingStation do
       20.times {subject.dock(Bike.new)}
       expect {subject.dock(Bike.new).to raise_error("The dock is full")}
     end
-
 
   end
 
